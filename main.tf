@@ -14,19 +14,19 @@ resource "virtualbox_vm" "node" {
   name      = format("node-%02d", count.index + 1)
   image     = "https://app.vagrantup.com/ubuntu/boxes/bionic64/versions/20180903.0.0/providers/virtualbox.box"
   cpus      = 2
-  memory    = "512 mib"
+  memory    = "1024 mib"
   user_data = file("${path.module}/user_data")
 
   network_adapter {
     type           = "hostonly"
-    host_interface = "VirtualBox Host-Only Ethernet Adapter"
+    host_interface = "vboxnet0"
   }
 }
 
-output "IPAddr" {
-  value = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address, 1)
-}
-
-output "IPAddr_2" {
-  value = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address, 2)
-}
+#output "IPAddr" {
+#  value = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address, 1)
+#}
+#
+#output "IPAddr_2" {
+#  value = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address, 2)
+#}
